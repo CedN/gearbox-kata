@@ -26,4 +26,7 @@ public class Gearbox {
         }
     }
 
+    public int getSpeed() {
+        return s;
+    }
 }
