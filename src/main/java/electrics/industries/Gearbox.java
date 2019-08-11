@@ -13,24 +13,30 @@ public class Gearbox {
 
     public void processEnginePower(int enginePower) {
         this.enginePower = enginePower;
-        calculateSpeed();
-        fixCalculatedSpeed();
-    }
-
-    private void calculateSpeed() {
         if (speed > NEUTRAL_SPEED) {
-            if (enginePower > HIGHER_SHIFT_POINT) {
-                speed++;
-            } else if (enginePower < LOWER_SHIFT_POINT) {
-                speed--;
-            }
+            calculateSpeed();
+        }
+        else {
+            speed = LOWEST_SPEED;
         }
     }
 
-    private void fixCalculatedSpeed() {
-        if (speed > HIGHEST_SPEED) {
+    private void calculateSpeed() {
+        if (enginePower > HIGHER_SHIFT_POINT) {
+            increaseSpeed();
+        } else if (enginePower < LOWER_SHIFT_POINT) {
+            decreasedSpeed();
+        }
+    }
+
+    private void decreasedSpeed() {
+        if (speed > LOWEST_SPEED) {
             speed--;
-        } else if (speed < LOWEST_SPEED) {
+        }
+    }
+
+    private void increaseSpeed() {
+        if (speed < HIGHEST_SPEED) {
             speed++;
         }
     }
