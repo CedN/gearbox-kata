@@ -12,6 +12,12 @@ public class Gearbox {
     private int enginePower = 0;
 
     public void processEnginePower(int enginePower) {
+        this.enginePower = enginePower;
+        calculateSpeed();
+        fixCalculatedSpeed();
+    }
+
+    private void calculateSpeed() {
         if (speed > NEUTRAL_SPEED) {
             if (enginePower > HIGHER_SHIFT_POINT) {
                 speed++;
@@ -19,12 +25,14 @@ public class Gearbox {
                 speed--;
             }
         }
+    }
+
+    private void fixCalculatedSpeed() {
         if (speed > HIGHEST_SPEED) {
             speed--;
         } else if (speed < LOWEST_SPEED) {
             speed++;
         }
-        this.enginePower = enginePower;
     }
 
     public int getSpeed() {
