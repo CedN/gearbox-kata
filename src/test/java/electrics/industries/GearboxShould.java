@@ -1,6 +1,5 @@
 package electrics.industries;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +29,7 @@ public class GearboxShould {
     }
 
     private void whenSetEnginePowerTo(int enginePowerToShiftLowerSpeed) {
-        gearbox.doit(enginePowerToShiftLowerSpeed);
+        gearbox.processEnginePower(enginePowerToShiftLowerSpeed);
     }
 
     @Test
@@ -56,7 +55,7 @@ public class GearboxShould {
 
     private void givenGearboxAtSpeed(int speed) {
         for (int i = 0; i < speed; i++) {
-            gearbox.doit(ENGINE_POWER_TO_SHIFT_HIGHER_SPEED);
+            gearbox.processEnginePower(ENGINE_POWER_TO_SHIFT_HIGHER_SPEED);
         }
     }
 
