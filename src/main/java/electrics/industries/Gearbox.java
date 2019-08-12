@@ -4,14 +4,14 @@ public class Gearbox {
 
     private static final int HIGHER_SHIFT_POINT = 2000;
     private static final int LOWER_SHIFT_POINT = 500;
-    private static final int NEUTRAL_SPEED = 0;
+    private static final int NO_SPEED = 0;
     private static final int HIGHEST_SPEED = 6;
     private static final int LOWEST_SPEED = 1;
 
-    private int speed = 0;
+    private int speed = NO_SPEED;
 
     public void processEnginePower(int enginePower) {
-        if (speed > NEUTRAL_SPEED) {
+        if (speed > NO_SPEED) {
             calculateSpeed(enginePower);
         }
         else {
