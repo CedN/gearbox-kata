@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StandartGearboxShould {
+class ClassicGearboxShould {
 
     private static final int ENGINE_POWER_ABOVE_2000 = 2001;
     private static final int ENGINE_POWER_BELOW_500 = 499;
@@ -15,91 +15,107 @@ public class StandartGearboxShould {
     private Gearbox gearbox;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         gearbox = new Gearbox();
     }
 
     @Nested
     @DisplayName("Gearbox in standard gear")
-    public class GearboxInStandardSpeed {
+    class GearboxInStandardSpeed {
 
         @BeforeEach
-        public void setGearBoxIn3thGear() {
+        void setGearBoxIn3thGear() {
             setEnginePowerAbove2000(3);
         }
         
         @Test
-        public void up_speed_at_4_when_set_engine_power_above_2000() {
+        void up_speed_at_4_when_set_engine_power_above_2000() {
             setEnginePowerAbove2000();
-            assertEquals(4, gearbox.getSpeed());
+            assertSpeedIs(4);
+
         }
 
         @Test
-        public void down_speed_to_2_when_set_engine_power_below_500() {
+        void down_speed_to_2_when_set_engine_power_below_500() {
             setEnginePowerBelow500();
-            assertEquals(2, gearbox.getSpeed());
+            assertSpeedIs(2);
         }
 
         @Test
-        public void keep_speed_to_3_when_set_engine_power_at_1000() {
+        void keep_speed_to_3_when_set_engine_power_at_1000() {
             gearbox.processEnginePower(1000);
-            assertEquals(3, gearbox.getSpeed());
+            assertSpeedIs(3);
         }
+    }
+
+    private void assertSpeedIs(int speed) {
+        assertEquals(speed, gearbox.getSpeed());
     }
     
     @Nested
     @DisplayName("Gearbox in neutral")
-    public class GearboxInNeutral {
+    class GearboxInNeutral {
 
         @Test
-        public void up_speed_to_1_when_start_with_engine_power_below_500() {
+        void up_speed_to_1_when_start_with_engine_power_below_500() {
             setEnginePowerBelow500();
-            assertEquals(1, gearbox.getSpeed());
+            assertSpeedIs(1);
         }
 
         @Test
-        public void up_speed_to_1_when_start_with_engine_power_above_2000() {
+        void up_speed_to_1_when_start_with_engine_power_above_2000() {
             setEnginePowerAbove2000();
-            assertEquals(1, gearbox.getSpeed());
+            assertSpeedIs(1);
         }
 
         @Test
-        public void up_speed_to_1_when_start_with_engine_power_above_1000() {
+        void up_speed_to_1_when_start_with_engine_power_above_1000() {
             gearbox.processEnginePower(1000);
-            assertEquals(1, gearbox.getSpeed());
+            assertSpeedIs(1);
         }
     }
 
     @Nested
     @DisplayName("Gearbox in lower gear ")
-    public class GearboxInLowerSpeed {
+    class GearboxInLowerSpeed {
 
         @BeforeEach
-        public void setGearBoxInLowerGear() {
+        void setGearBoxInLowerGear() {
             setEnginePowerAbove2000();
         }
 
         @Test
-        public void keep_speed_to_1_when_set_engine_power_below_500() {
+        void keep_speed_to_1_when_set_engine_power_below_500() {
             setEnginePowerBelow500();
-            assertEquals(1, gearbox.getSpeed());
+            assertSpeedIs(1);
         }
 
+        @Test
+        void up_speed_to_2_when_set_engine_power_above_2000() {
+            setEnginePowerAbove2000();
+            assertSpeedIs(2);
+        }
     }
 
     @Nested
     @DisplayName("Gearbox in higher gear")
-    public class GearboxInHigherSpeed {
+    class GearboxInHigherSpeed {
 
         @BeforeEach
-        public void setGearBoxInHigherGear() {
+        void setGearBoxInHigherGear() {
             setEnginePowerAbove2000(6);
         }
 
         @Test
-        public void keep_speed_to_1_when_set_engine_power_below_500() {
+        void down_speed_to_5_when_set_engine_power_below_500() {
+            setEnginePowerBelow500();
+            assertSpeedIs(5);
+        }
+
+        @Test
+        void keep_speed_to_6_when_set_engine_power_above_2000() {
             setEnginePowerAbove2000();
-            assertEquals(6, gearbox.getSpeed());
+            assertSpeedIs(6);
         }
     }
 
@@ -115,7 +131,4 @@ public class StandartGearboxShould {
         for (int i = 0; i < times; i++)
             setEnginePowerAbove2000();
     }
-
-    
-
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CustomGearboxShould {
+class CustomGearboxShould {
 
     private static final int UPPER_SHIFT_POINT_FROM_LOW_TO_MEDIUM = 400;
     private static final int LOWER_SHIFT_POINT_FROM_MEDIUM_TO_LOW = 500;
@@ -20,7 +20,7 @@ public class CustomGearboxShould {
     private Gearbox gearbox;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         gearbox = new Gearbox(
                 new LowerGear(UPPER_SHIFT_POINT_FROM_LOW_TO_MEDIUM),
                 new Gear(LOWER_SHIFT_POINT_FROM_MEDIUM_TO_LOW, UPPER_SHIFT_POINT_FROM_MEDIUM_TO_HIGH),
@@ -29,38 +29,38 @@ public class CustomGearboxShould {
     }
 
     @Test
-    public void up_to_low_speed_when_start_engine_power() {
+    void up_to_low_speed_when_start_engine_power() {
         startEnginePower();
-        assertSpeed(LOW_SPEED);
+        assertSpeedIs(LOW_SPEED);
     }
 
     private void startEnginePower() {
         gearbox.processEnginePower(1);
     }
 
-    private void assertSpeed(int speed) {
+    private void assertSpeedIs(int speed) {
         assertEquals(speed, gearbox.getSpeed());
     }
 
     @Nested
     @DisplayName("Gearbox at lower gear")
-    public class GearboxAtLowerGear {
+    class GearboxAtLowerGear {
 
         @BeforeEach
-        public void setAtLowerGear() {
+        void setAtLowerGear() {
             startEnginePower();
         }
 
         @Test
-        public void keep_at_low_speed_when_set_engine_power_to_400() {
+        void keep_at_low_speed_when_set_engine_power_to_400() {
             gearbox.processEnginePower(UPPER_SHIFT_POINT_FROM_LOW_TO_MEDIUM);
-            assertSpeed(LOW_SPEED);
+            assertSpeedIs(LOW_SPEED);
         }
 
         @Test
-        public void up_from_low_speed_to_medium_speed_when_set_engine_power_above_400() {
+        void up_from_low_speed_to_medium_speed_when_set_engine_power_above_400() {
             moveUpToMediumGear();
-            assertSpeed(MEDIUM_SPEED);
+            assertSpeedIs(MEDIUM_SPEED);
         }
     }
 
@@ -71,64 +71,64 @@ public class CustomGearboxShould {
 
     @Nested
     @DisplayName("Gearbox at medium gear")
-    public class GearboxAtMediumGear {
+    class GearboxAtMediumGear {
 
         @BeforeEach
-        public void setAtMediumGear() {
+        void setAtMediumGear() {
             startEnginePower();
             moveUpToMediumGear();
         }
 
         @Test
-        public void keep_at_medium_speed_when_set_engine_power_to_500() {
+        void keep_at_medium_speed_when_set_engine_power_to_500() {
             gearbox.processEnginePower(LOWER_SHIFT_POINT_FROM_MEDIUM_TO_LOW );
-            assertSpeed(MEDIUM_SPEED);
+            assertSpeedIs(MEDIUM_SPEED);
         }
 
         @Test
-        public void down_to_low_speed_when_set_engine_power_below_500() {
+        void down_to_low_speed_when_set_engine_power_below_500() {
             gearbox.processEnginePower(LOWER_SHIFT_POINT_FROM_MEDIUM_TO_LOW - 1);
-            assertSpeed(LOW_SPEED);
+            assertSpeedIs(LOW_SPEED);
         }
 
         @Test
-        public void keep_at_medium_speed_when_set_engine_power_to_5000() {
+        void keep_at_medium_speed_when_set_engine_power_to_5000() {
             gearbox.processEnginePower(UPPER_SHIFT_POINT_FROM_MEDIUM_TO_HIGH);
-            assertSpeed(MEDIUM_SPEED);
+            assertSpeedIs(MEDIUM_SPEED);
         }
 
         @Test
-        public void up_to_high_speed_when_set_engine_power_above_5000() {
+        void up_to_high_speed_when_set_engine_power_above_5000() {
             moveUpToHigherGear();
-            assertSpeed(HIGH_SPEED);
+            assertSpeedIs(HIGH_SPEED);
         }
     }
 
-    public void moveUpToHigherGear() {
+    void moveUpToHigherGear() {
         gearbox.processEnginePower(UPPER_SHIFT_POINT_FROM_MEDIUM_TO_HIGH + 1);
     }
 
     @Nested
     @DisplayName("Gearbox at higher gear")
-    public class GearboxAtHigherGear {
+    class GearboxAtHigherGear {
 
         @BeforeEach
-        public void setAtHigherGear() {
+        void setAtHigherGear() {
             startEnginePower();
             moveUpToMediumGear();
             moveUpToHigherGear();
         }
 
         @Test
-        public void keep_at_high_speed_when_set_engine_power_to_600() {
+        void keep_at_high_speed_when_set_engine_power_to_600() {
             gearbox.processEnginePower(LOWER_SHIFT_POINT_FROM_HIGH_TO_MEDIUM);
-            assertSpeed(HIGH_SPEED);
+            assertSpeedIs(HIGH_SPEED);
         }
 
         @Test
-        public void down_to_medium_speed_when_set_engine_below_600() {
+        void down_to_medium_speed_when_set_engine_below_600() {
             gearbox.processEnginePower(LOWER_SHIFT_POINT_FROM_HIGH_TO_MEDIUM - 1);
-            assertSpeed(MEDIUM_SPEED);
+            assertSpeedIs(MEDIUM_SPEED);
         }
     }
 
